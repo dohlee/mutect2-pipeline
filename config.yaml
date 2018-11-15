@@ -1,0 +1,66 @@
+# PATH TO A DIRECTORY WHERE FASTQ FILES ARE STORED.
+raw_data_dir: '/path/to/fastq/files'
+
+# PATH TO A DIRECTORY AND A FASTA FILE OF THE REFERENCE GENOME.
+# WXS FASTQ FILES WILL BE MAPPED AGAINST THIS REFERENCE GENOME.
+reference:
+    basename: 'path/to/reference/Homo_sapiens.hg38.genome'
+    fasta: 'path/to/reference/Homo_sapiens.hg38.genome.fasta'
+
+resource:
+    # USED FOR GATK GETPILEUPSUMMARIES.
+    common_biallelic_variants: '/path/to/resource/small_exac_common_3.hg38.vcf.gz'
+    # USED FOR GATK BASERECALIBRATOR.
+    known_variant_sites: '/path/to/resource/af-only-gnomad.hg38.vcf.gz'
+
+# SOME GENERIC EXPRESSIONS OF WILDCARDS WHICH CLARIFIES 
+# DETERMINING WILDCARDS.
+wildcard_constraints:
+    sample: 'SRR[0-9]+'
+    tumor: 'SRR[0-9]+'
+    normal: 'SRR[0-9]+'
+
+# PATH TO A DIRECTORY WHERE THE RESULT FILES(PROCESSED BAM)
+# WILL BE STORED.
+result_dir:
+    sample: '/path/to/result/{sample}'
+    tumor: '/path/to/result/{tumor}'
+    normal: '/path/to/result/{normal}'
+
+#
+# TOOL CONFIGURATIONS
+#
+snpeff:
+    # FOR HUMAN, USE 'hg38' OR 'GRCh38.76'.
+    genome_version: 'hg38'
+
+#
+# MULTITHREADING CONFIGURATIONS
+#
+threads:
+    bwa:
+        index: 1
+        mem: 8
+    gatk:
+        base_recalibrator: 1
+        apply_bqsr: 1
+        mutect2_tumor_normal: 1
+        get_pileup_summaries: 1
+        calculate_contamination: 1
+        filter_mutect_calls: 1
+        create_sequence_dictionary: 1
+    snpeff: 1
+    sambamba:
+        sort: 6
+        index: 6
+        markdup: 6
+
+#
+# MISCELLANEOUS CONFIGURATIONS (OPTIONAL)
+#
+# YOU MAY NEED A MANIFEST FOR YOUR SAMPLES.
+manifest: '/path/to/manifest/file'
+
+# YOU MAY WANT TO SPECIFY A LIST OF SAMPLES TO BE PROCESSED.
+sample_list: '/path/to/sample/list'
+
