@@ -1,0 +1,3 @@
+[submodule "wxs-preprocessing-pipeline"]
+	path = wxs-preprocessing-pipeline
+	url = https://github.com/dohlee/wxs-preprocessing-pipeline
